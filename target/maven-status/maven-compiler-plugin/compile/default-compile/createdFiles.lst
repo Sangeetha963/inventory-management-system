@@ -5,6 +5,7 @@ com/example/employeemanagement/service/impl/EmployeeServiceImpl.class
 com/example/employeemanagement/App.class
 com/example/employeemanagement/service/impl/ProductServiceImpl.class
 com/example/employeemanagement/controller/EmployeeController.class
+com/example/employeemanagement/model/PriceHistory.class
 com/example/employeemanagement/dto/ProductDTO.class
 com/example/employeemanagement/model/Employee.class
 com/example/employeemanagement/dto/EmployeeDTO.class

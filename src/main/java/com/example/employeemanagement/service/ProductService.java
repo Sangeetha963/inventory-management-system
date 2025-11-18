@@ -16,4 +16,6 @@ public interface ProductService {
     Product updateProduct(Long id, ProductDTO dto);
 
     void deleteProduct(Long id);
+
+    List<Product> getLowStockProducts();
 }

@@ -8,6 +8,7 @@
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/EmployeeManagementApplication.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/repository/EmployeeRepository.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/service/EmployeeService.java
+/Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/PriceHistory.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/Employee.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/Product.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/repository/ProductRepository.java

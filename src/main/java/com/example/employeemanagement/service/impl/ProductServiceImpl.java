@@ -5,6 +5,7 @@ import com.example.employeemanagement.model.Product;
 import com.example.employeemanagement.repository.ProductRepository;
 import com.example.employeemanagement.service.ProductService;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -50,4 +51,13 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id) {
         repo.deleteById(id);
     }
+    
+   @Override
+    public List<Product> getLowStockProducts() {
+        return repo.findAll()
+                .stream()
+                .filter(p -> p.getStock() != null && p.getStock() < 10)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -42,4 +42,9 @@ public class ProductController {
         service.deleteProduct(id);
         return "Deleted Successfully";
     }
+
+    @GetMapping("/low-stock")
+    public List<Product> getLowStockProducts(){
+        return service.getLowStockProducts();
+    }
 }
