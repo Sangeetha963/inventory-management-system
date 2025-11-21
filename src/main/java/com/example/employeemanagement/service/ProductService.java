@@ -2,6 +2,8 @@ package com.example.employeemanagement.service;
 
 import com.example.employeemanagement.dto.ProductDTO;
 import com.example.employeemanagement.model.Product;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 
@@ -18,4 +20,7 @@ public interface ProductService {
     void deleteProduct(Long id);
 
     List<Product> getLowStockProducts();
+
+    void uploadProductsFromExcel(MultipartFile file);
+
 }

@@ -4,6 +4,8 @@ import com.example.employeemanagement.dto.ProductDTO;
 import com.example.employeemanagement.model.Product;
 import com.example.employeemanagement.service.ProductService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 
@@ -46,5 +48,11 @@ public class ProductController {
     @GetMapping("/low-stock")
     public List<Product> getLowStockProducts(){
         return service.getLowStockProducts();
+    }
+
+    @PostMapping("/upload")
+    public String uploadExcel(@RequestParam("file") MultipartFile file) {
+        service.uploadProductsFromExcel(file);
+        return "Uploaded Successfully";
     }
 }
