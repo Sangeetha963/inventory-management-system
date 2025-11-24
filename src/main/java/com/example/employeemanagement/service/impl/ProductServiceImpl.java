@@ -11,11 +11,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Comparator;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
+
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 
 @Service
@@ -89,6 +95,97 @@ public class ProductServiceImpl implements ProductService {
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to upload Excel", e);
+        }
+    }
+
+    @Override
+    public List<Product> searchProducts(String name, String category, Double minPrice, Double maxPrice) {
+        return repo.searchProducts(name, category, minPrice, maxPrice);
+    }
+
+    @Override
+    public void exportProductsToExcel(HttpServletResponse response) {
+        try {
+            List<Product> products = repo.findAll();
+
+            products.sort(Comparator.comparing(Product::getId));
+
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Products");
+
+            /* ----------------------  STYLES  ------------------------ */
+
+            // Header Style: Bold + Background color + Center
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setFontHeightInPoints((short) 12);
+            headerStyle.setFont(headerFont);
+            headerStyle.setAlignment(HorizontalAlignment.CENTER);
+            headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            headerStyle.setBorderBottom(BorderStyle.THIN);
+            headerStyle.setBorderTop(BorderStyle.THIN);
+            headerStyle.setBorderLeft(BorderStyle.THIN);
+            headerStyle.setBorderRight(BorderStyle.THIN);
+
+            // Normal Data Style: Border only
+            CellStyle dataStyle = workbook.createCellStyle();
+            dataStyle.setBorderBottom(BorderStyle.THIN);
+            dataStyle.setBorderTop(BorderStyle.THIN);
+            dataStyle.setBorderLeft(BorderStyle.THIN);
+            dataStyle.setBorderRight(BorderStyle.THIN);
+
+            /* --------------------  HEADER ROW  ----------------------- */
+            Row header = sheet.createRow(0);
+
+            String[] columns = {"ID", "Name", "Price", "Category", "Stock"};
+            for (int i = 0; i < columns.length; i++) {
+                Cell cell = header.createCell(i);
+                cell.setCellValue(columns[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            /* --------------------  DATA ROWS  ------------------------ */
+            int rowIndex = 1;
+            for (Product p : products) {
+                Row row = sheet.createRow(rowIndex++);
+
+                Cell c0 = row.createCell(0);
+                c0.setCellValue(p.getId() != null ? p.getId() : 0);
+                c0.setCellStyle(dataStyle);
+
+                Cell c1 = row.createCell(1);
+                c1.setCellValue(p.getName() != null ? p.getName() : "");
+                c1.setCellStyle(dataStyle);
+
+                Cell c2 = row.createCell(2);
+                c2.setCellValue(p.getPrice() != null ? p.getPrice() : 0.0);
+                c2.setCellStyle(dataStyle);
+
+                Cell c3 = row.createCell(3);
+                c3.setCellValue(p.getCategory() != null ? p.getCategory() : "");
+                c3.setCellStyle(dataStyle);
+
+                Cell c4 = row.createCell(4);
+                c4.setCellValue(p.getStock() != null ? p.getStock() : 0);
+                c4.setCellStyle(dataStyle);
+            }
+
+            /* ------------------  AUTO SIZE COLUMNS  ------------------ */
+            for (int i = 0; i < columns.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            /* ----------------------  DOWNLOAD  ------------------------ */
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader("Content-Disposition", "attachment; filename=products.xlsx");
+
+            workbook.write(response.getOutputStream());
+            workbook.close();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to export products", e);
         }
     }
 

@@ -5,6 +5,7 @@ import com.example.employeemanagement.model.Product;
 import com.example.employeemanagement.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 import java.util.List;
@@ -54,5 +55,20 @@ public class ProductController {
     public String uploadExcel(@RequestParam("file") MultipartFile file) {
         service.uploadProductsFromExcel(file);
         return "Uploaded Successfully";
+    }
+
+    @GetMapping("/search")
+    public List<Product> searchProducts(
+        @RequestParam(required= false) String name,
+        @RequestParam(required= false) String category,
+        @RequestParam(required= false) Double minPrice,
+        @RequestParam(required= false) Double maxPrice
+    ) {
+        return service.searchProducts(name, category, minPrice, maxPrice);
+    }
+
+    @GetMapping("/export")
+    public void exportProducts(HttpServletResponse response) {
+        service.exportProductsToExcel(response);
     }
 }
