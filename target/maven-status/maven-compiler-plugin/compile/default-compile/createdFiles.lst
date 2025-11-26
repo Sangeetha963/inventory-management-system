@@ -1,4 +1,5 @@
 com/example/employeemanagement/service/impl/SupplierServiceImpl.class
+com/example/employeemanagement/repository/PriceHistoryRepository.class
 com/example/employeemanagement/controller/StockHistoryController.class
 com/example/employeemanagement/controller/SupplierController.class
 com/example/employeemanagement/model/StockHistory.class

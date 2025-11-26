@@ -28,4 +28,6 @@ public interface ProductService {
 
     void exportProductsToExcel(HttpServletResponse response);
 
+    Product updateProductPrice(Long id, Double newPrice);
+
 }

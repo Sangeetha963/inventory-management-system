@@ -16,6 +16,7 @@
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/App.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/EmployeeManagementApplication.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/repository/StockHistoryRepository.java
+/Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/repository/PriceHistoryRepository.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/repository/EmployeeRepository.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/service/EmployeeService.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/service/impl/SupplierServiceImpl.java

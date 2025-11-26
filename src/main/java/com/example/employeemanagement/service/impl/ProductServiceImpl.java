@@ -4,6 +4,9 @@ import com.example.employeemanagement.dto.ProductDTO;
 import com.example.employeemanagement.model.Product;
 import com.example.employeemanagement.repository.ProductRepository;
 import com.example.employeemanagement.service.ProductService;
+import com.example.employeemanagement.model.PriceHistory;
+import com.example.employeemanagement.repository.PriceHistoryRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +15,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Comparator;
+import java.time.LocalDateTime;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -28,9 +32,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repo;
+    private final PriceHistoryRepository priceHistoryRepo;
 
-    public ProductServiceImpl(ProductRepository repo) {
+
+      public ProductServiceImpl(ProductRepository repo, PriceHistoryRepository priceHistoryRepo) {
         this.repo = repo;
+        this.priceHistoryRepo = priceHistoryRepo;
     }
 
     @Override
@@ -187,6 +194,29 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to export products", e);
         }
+    }
+
+
+    @Transactional
+    @Override
+    public Product updateProductPrice(Long id, Double newPrice) {
+        Product product = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        Double oldPrice = product.getPrice();      // Hold previous price
+        product.setPrice(newPrice);                // Update new price
+        repo.save(product);                        // Save product
+
+        // Create price history log
+        PriceHistory history = new PriceHistory();
+        history.setProductId(product.getId());
+        history.setOldPrice(oldPrice);
+        history.setNewPrice(newPrice);
+        history.setChangedAt(LocalDateTime.now().toString());
+
+        priceHistoryRepo.save(history);            // Save log entry
+
+        return product;
     }
 
 }
