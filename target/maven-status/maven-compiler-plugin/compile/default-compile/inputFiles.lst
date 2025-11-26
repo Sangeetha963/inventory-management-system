@@ -5,10 +5,12 @@
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/controller/SupplierController.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/service/ProductService.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/service/SupplierService.java
+/Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/repository/ProductAuditRepository.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/controller/StockHistoryController.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/PriceHistory.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/Employee.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/repository/ProductRepository.java
+/Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/listener/ProductAuditListener.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/dto/ProductDTO.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/service/impl/ProductServiceImpl.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/Supplier.java
@@ -23,4 +25,5 @@
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/service/impl/StockHistoryServiceImpl.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/StockHistory.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/Product.java
+/Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/model/ProductAudit.java
 /Users/sangeetha/employee-management/src/main/java/com/example/employeemanagement/controller/EmployeeController.java

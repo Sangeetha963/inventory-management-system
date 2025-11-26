@@ -2,6 +2,7 @@ package com.example.employeemanagement.service;
 
 import com.example.employeemanagement.dto.ProductDTO;
 import com.example.employeemanagement.model.Product;
+import com.example.employeemanagement.model.ProductAudit; 
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -29,5 +30,8 @@ public interface ProductService {
     void exportProductsToExcel(HttpServletResponse response);
 
     Product updateProductPrice(Long id, Double newPrice);
+
+    List<ProductAudit> getAuditLogs(Long productId);
+
 
 }

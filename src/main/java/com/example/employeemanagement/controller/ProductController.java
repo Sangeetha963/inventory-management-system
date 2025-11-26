@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
+import com.example.employeemanagement.model.ProductAudit;
+import com.example.employeemanagement.listener.ProductAuditListener;
+
 
 import java.util.List;
 
@@ -89,5 +92,10 @@ public class ProductController {
 
         Product updated = service.updateProductPrice(id, price);
         return ResponseEntity.ok(updated);
+    }
+
+    @GetMapping("/{id}/audit")
+    public List<ProductAudit> getAudit(@PathVariable Long id){
+        return service.getAuditLogs(id);
     }
 }

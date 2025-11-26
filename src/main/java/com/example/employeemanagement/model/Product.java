@@ -1,8 +1,10 @@
 package com.example.employeemanagement.model;
+import com.example.employeemanagement.listener.ProductAuditListener;
 
 import jakarta.persistence.*;
 
 @Entity
+@EntityListeners(ProductAuditListener.class)
 @Table(name = "products")
 public class Product {
 

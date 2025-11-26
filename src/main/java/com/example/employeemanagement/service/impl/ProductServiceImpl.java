@@ -7,6 +7,9 @@ import com.example.employeemanagement.service.ProductService;
 import com.example.employeemanagement.model.PriceHistory;
 import com.example.employeemanagement.repository.PriceHistoryRepository;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.employeemanagement.model.ProductAudit;
+import com.example.employeemanagement.repository.ProductAuditRepository;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,16 +37,22 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository repo;
     private final PriceHistoryRepository priceHistoryRepo;
 
+    private final ProductAuditRepository auditRepo;
 
-      public ProductServiceImpl(ProductRepository repo, PriceHistoryRepository priceHistoryRepo) {
+
+      public ProductServiceImpl(ProductRepository repo, PriceHistoryRepository priceHistoryRepo, ProductAuditRepository auditRepo) {
         this.repo = repo;
         this.priceHistoryRepo = priceHistoryRepo;
+        this.auditRepo = auditRepo;
     }
 
     @Override
     public Product createProduct(ProductDTO dto) {
         Product p = new Product(dto.getName(), dto.getPrice(), dto.getCategory(), dto.getStock());
-        return repo.save(p);
+        Product saved = repo.save(p);
+
+        auditRepo.save(new ProductAudit(saved.getId(), "CREATE", null, saved.toString()));
+        return saved;
     }
 
     @Override
@@ -66,11 +75,20 @@ public class ProductServiceImpl implements ProductService {
         p.setCategory(dto.getCategory());
         p.setStock(dto.getStock());
 
-        return repo.save(p);
+        Product updated = repo.save(p);
+
+        String oldVal = p.toString(); // BEFORE update
+        auditRepo.save(new ProductAudit(id,"UPDATE", oldVal, updated.toString()));
+
+        return updated;
     }
 
     @Override
     public void deleteProduct(Long id) {
+    Product p = repo.findById(id).orElse(null);
+        if(p != null){
+            auditRepo.save(new ProductAudit(id,"DELETE", p.toString(), null));
+        }
         repo.deleteById(id);
     }
     
@@ -217,6 +235,11 @@ public class ProductServiceImpl implements ProductService {
         priceHistoryRepo.save(history);            // Save log entry
 
         return product;
+    }
+
+    @Override
+    public List<ProductAudit> getAuditLogs(Long productId) {
+        return auditRepo.findByProductId(productId);
     }
 
 }

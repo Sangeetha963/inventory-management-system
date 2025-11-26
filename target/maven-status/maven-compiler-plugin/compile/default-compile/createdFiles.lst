@@ -1,3 +1,4 @@
+com/example/employeemanagement/repository/ProductAuditRepository.class
 com/example/employeemanagement/service/impl/SupplierServiceImpl.class
 com/example/employeemanagement/repository/PriceHistoryRepository.class
 com/example/employeemanagement/controller/StockHistoryController.class
@@ -15,10 +16,12 @@ com/example/employeemanagement/controller/ProductController.class
 com/example/employeemanagement/service/SupplierService.class
 com/example/employeemanagement/repository/ProductRepository.class
 com/example/employeemanagement/model/Product.class
+com/example/employeemanagement/model/ProductAudit.class
 com/example/employeemanagement/repository/EmployeeRepository.class
 com/example/employeemanagement/service/impl/EmployeeServiceImpl.class
 com/example/employeemanagement/service/impl/StockHistoryServiceImpl.class
 com/example/employeemanagement/repository/SupplierRepository.class
+com/example/employeemanagement/listener/ProductAuditListener.class
 com/example/employeemanagement/model/PriceHistory.class
 com/example/employeemanagement/service/StockHistoryService.class
 com/example/employeemanagement/dto/ProductDTO.class
